@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Instagram</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style>
+        .social-part .fa {
+            padding-right: 20px;
+        }
+
+        ul li a {
+            margin-right: 20px;
+        }
+
+        .search-form .form-group {
+            float: right !important;
+            transition: all 0.35s, border-radius 0s;
+            width: 32px;
+            height: 32px;
+            background-color: #fff;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+        }
+
+            .search-form .form-group input.form-control {
+                padding-right: 20px;
+                border: 0 none;
+                background: transparent;
+                box-shadow: none;
+                display: block;
+            }
+
+                .search-form .form-group input.form-control::-webkit-input-placeholder {
+                    display: none;
+                }
+
+                .search-form .form-group input.form-control:-moz-placeholder {
+                    /* Firefox 18- */
+                    display: none;
+                }
+
+                .search-form .form-group input.form-control::-moz-placeholder {
+                    /* Firefox 19+ */
+                    display: none;
+                }
+
+                .search-form .form-group input.form-control:-ms-input-placeholder {
+                    display: none;
+                }
+
+            .search-form .form-group:hover,
+            .search-form .form-group.hover {
+                width: 100%;
+                border-radius: 4px 25px 25px 4px;
+            }
+
+            .search-form .form-group span.form-control-feedback {
+                position: absolute;
+                top: -1px;
+                right: -2px;
+                z-index: 2;
+                display: block;
+                width: 34px;
+                height: 34px;
+                line-height: 34px;
+                text-align: center;
+                color: #3596e0;
+                left: initial;
+                font-size: 14px;
+            }
+    </style>
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-sm   navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color:black">Ana Sayfa <span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item dropdown dmenu">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color:black">
+                            Kullanıcı
+                        </a>
+                        <div class="dropdown-menu sm-menu">
+                            <a class="dropdown-item" href="#">Ayarlar</a>
+                            <a class="dropdown-item" href="../Home/Profil">Profil</a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color:black">Keşfet</a>
+                    </li>
+
+
+
+
+                </ul>
+
+
+            </div>
+            <div class="col-md-4 col-md-offset-3" style="color:black">
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback" style="margin: 9px;">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="search" placeholder="search">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Instagram - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.navbar-light .dmenu').hover(function () {
+            $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+        }, function () {
+            $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+        });
+    });
+</script>

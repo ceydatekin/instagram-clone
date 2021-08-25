@@ -1,0 +1,319 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+
+    .panel-login {
+        border-color: #ccc;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+        -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+    }
+
+        .panel-login > .panel-heading {
+            color: #00415d;
+            background-color: #fff;
+            border-color: #fff;
+            text-align: center;
+        }
+
+            .panel-login > .panel-heading a {
+                text-decoration: none;
+                color: #666;
+                font-weight: bold;
+                font-size: 15px;
+                -webkit-transition: all 0.1s linear;
+                -moz-transition: all 0.1s linear;
+                transition: all 0.1s linear;
+            }
+
+                .panel-login > .panel-heading a.active {
+                    color: #029f5b;
+                    font-size: 18px;
+                }
+
+            .panel-login > .panel-heading hr {
+                margin-top: 10px;
+                margin-bottom: 0px;
+                clear: both;
+                border: 0;
+                height: 1px;
+                background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+                background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+            
+                background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+            }
+
+        .panel-login input[type="text"], .panel-login input[type="email"], .panel-login input[type="password"] {
+            height: 45px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+        }
+
+        .panel-login input:hover,
+        .panel-login input:focus {
+            outline: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            border-color: #ccc;
+        }
+
+    .btn-login {
+        background-color: #59B2E0;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #59B2E6;
+    }
+
+        .btn-login:hover,
+        .btn-login:focus {
+            color: #fff;
+            background-color: #53A3CD;
+            border-color: #53A3CD;
+        }
+
+    .forgot-password {
+        text-decoration: underline;
+        color: #888;
+    }
+
+        .forgot-password:hover,
+        .forgot-password:focus {
+            text-decoration: underline;
+            color: #666;
+        }
+
+    .btn-register {
+        background-color: #1CB94E;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #1CB94A;
+    }
+
+        .btn-register:hover,
+        .btn-register:focus {
+            color: #fff;
+            background-color: #1CA347;
+            border-color: #1CA347;
+        }
+</style>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Giriş Yap</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="#" id="register-form-link">Kayıt Ol</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12" id="login-form">
+
+                            <div class="form-group">
+                                <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Kullanıcı Adı" value="">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Şifre">
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                <label for="remember">Bilgilerimi Hatırla</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <input type="button" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Giriş Yap">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="text-center">
+                                            <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Şifremi Unuttum</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="register-form" class="col-lg-12" style="visibility:hidden">
+                            <div class="form-group">
+                                <input type="text" name="name1" id="name" tabindex="1" class="form-control" placeholder="İsim" value="">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="surname1" id="surname" tabindex="1" class="form-control" placeholder="Soyisim" value="">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="firstusername1" id="firstusername" tabindex="2" class="form-control" placeholder="Kullanıcı Adı">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="firstpassword1" id="firstpassword" tabindex="2" class="form-control" placeholder="Şifre">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="mail1" id="mail" tabindex="2" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="telno1" id="telno" tabindex="2" class="form-control" placeholder="Telefon Numarası">
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="profilePhotoFile" id="profilePhotoFile" tabindex="2" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <input type="button" name="register-submit1" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Kayıt Ol">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('body').on('click', '#register-submit', function () {
+
+        var name = $('#name').val();
+        var surname = $('#surname').val();
+        var userName = $('#firstusername').val();
+        var telno = $('#firstpassword').val();
+        var mail = $('#mail').val();
+        var password = $('#telno').val();
+
+        var formdata = new FormData();
+
+        formdata.append('name', name);
+        formdata.append('surname', surname);
+        formdata.append('userName', userName);
+        formdata.append('telno', telno);
+        formdata.append('mail', mail);
+        formdata.append('password', password);
+       formdata.append('profilePhotoFile', $('#profilePhotoFile')[0].files[0]);
+
+        $.ajax({
+            url: '/KullaniciKaydet',
+            method: 'post',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                console.log(resp)
+                var data = JSON.parse(resp)
+                if (data.success == true) {
+                    $('#ogrenciEkle').modal('hide')
+                 
+                    console.log(resp.message);
+                }
+                else if (data.success == false)
+                    console.log("ders eklenirken hata olust")
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+</script>
+
+<script>
+    $('body').on('click', '#login-submit', function () {
+
+        var kullaniciAdi = $('#username').val();
+        var sifre = $('#password').val();
+
+        var formdata = new FormData();
+
+        formdata.append('kullaniciAdi', kullaniciAdi);
+        formdata.append('sifre', sifre);
+
+        $.ajax({
+            url: '/girisYapPost',
+            method: 'post',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+
+                if (resp == true) {
+                    window.location.href = "/"
+                    console.log("buradayız2");
+                }
+                else {
+                    alert("hatalı Giriş")
+                    window.location.reload(2);
+                    console.log("buradayız3");
+
+
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+    $(function () {
+        var log = document.getElementById('login-form');
+        var rag = document.getElementById('register-form');
+
+        $('#login-form-link').click(function (e) {
+            rag.style.visibility = 'hidden';
+            log.style.visibility = 'visible';
+            $("#login-form").delay(100).fadeIn(100);
+            $("#register-form").fadeOut(100);
+            $('#register-form-link').removeClass('active');
+            $(this).addClass('active');
+            e.preventDefault();
+        });
+        $('#register-form-link').click(function (e) {
+
+            rag.style.visibility = 'visible';
+            log.style.visibility = 'hidden';
+            $("#register-form").delay(100).fadeIn(100);
+            $("#login-form").fadeOut(100);
+            $('#login-form-link').removeClass('active');
+            $(this).addClass('active');
+            e.preventDefault();
+        });
+
+    });
+
+</script>
+

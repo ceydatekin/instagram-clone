@@ -1,0 +1,665 @@
+﻿@model Instagram.ViewModels.AkisViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+<style>
+    .fade {
+        opacity: 1 !important;
+        -webkit-transition: opacity .15s linear;
+        -o-transition: opacity .15s linear;
+        transition: opacity .15s linear;
+    }
+    .image-preview-input {
+        position: relative;
+        overflow: hidden;
+        margin: 0px;
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+
+        .image-preview-input input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+    .image-preview-input-title {
+        margin-left: 2px;
+    }
+    .hero {
+        padding: 6.25rem 0px !important;
+        margin: 0px !important;
+    }
+
+    .cardbox {
+        border-radius: 3px;
+        margin-bottom: 20px;
+        padding: 0px !important;
+    }
+
+        /* ------------------------------- */
+        /* Cardbox Heading
+    ---------------------------------- */
+        .cardbox .cardbox-heading {
+            padding: 16px;
+            margin: 0;
+        }
+
+        .cardbox .btn-flat.btn-flat-icon {
+            visibility: hidden;
+            border-radius: 50%;
+            font-size: 24px;
+            height: 32px;
+            width: 32px;
+            padding: 0;
+            overflow: hidden;
+            color: #fff !important;
+            background: #b5b6b6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cardbox .float-right .dropdown-menu {
+            position: relative;
+            left: 13px !important;
+        }
+
+        .cardbox .float-right a:hover {
+            background: #f4f4f4 !important;
+        }
+
+        .cardbox .float-right a.dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 4px 0px 4px 10px;
+            clear: both;
+            font-weight: 400;
+            font-family: 'Abhaya Libre', serif;
+            font-size: 14px !important;
+            color: #848484;
+            text-align: inherit;
+            white-space: nowrap;
+            background: 0 0;
+            border: 0;
+        }
+
+    /* ------------------------------- */
+    /* Media Section
+    ---------------------------------- */
+    .media {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: start;
+        align-items: flex-start;
+    }
+
+    .d-flex {
+        display: -ms-flexbox !important;
+        display: flex !important;
+    }
+
+    .media .mr-3 {
+        margin-right: 1rem !important;
+    }
+
+    .media img {
+        width: 48px !important;
+        height: 48px !important;
+        padding: 2px;
+        border: 2px solid #f4f4f4;
+    }
+
+
+    .media-body {
+        -ms-flex: 1;
+        flex: 1;
+        padding: .4rem !important;
+    }
+
+        .media-body p {
+            font-family: 'Rokkitt', serif;
+            font-weight: 500 !important;
+            font-size: 14px;
+            color: #88898a;
+        }
+
+        .media-body small span {
+            font-family: 'Rokkitt', serif;
+            font-size: 12px;
+            color: #aaa;
+            margin-right: 10px;
+        }
+
+
+    /* ------------------------------- */
+    /* Cardbox Item
+    ---------------------------------- */
+    .cardbox .cardbox-item {
+        position: relative;
+        display: block;
+    }
+
+        .cardbox .cardbox-item img {
+        }
+
+    .img-responsive {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .fw {
+        width: 100% !important;
+        height: auto;
+    }
+
+
+
+    /* ------------------------------- */
+    /* Cardbox Base
+    ---------------------------------- */
+    .cardbox-base {
+        border-bottom: 2px solid #f4f4f4;
+    }
+
+        .cardbox-base ul {
+            margin: 10px 0px 10px 15px !important;
+            padding: 10px !important;
+            font-size: 0px;
+            display: inline-block;
+        }
+
+        .cardbox-base li {
+            list-style: none;
+            margin: 0px 0px 0px -8px !important;
+            padding: 0px 0px 0px 0px !important;
+            display: inline-block;
+        }
+
+            .cardbox-base li a {
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+                .cardbox-base li a i {
+                    position: relative;
+                    top: 4px;
+                    font-size: 16px;
+                    color: #8d8d8d;
+                    margin-right: 15px;
+                }
+
+                .cardbox-base li a span {
+                    font-family: 'Rokkitt', serif;
+                    font-size: 14px;
+                    color: #8d8d8d;
+                    margin-left: 20px;
+                    position: relative;
+                    top: 5px;
+                }
+
+                .cardbox-base li a em {
+                    font-family: 'Rokkitt', serif;
+                    font-size: 14px;
+                    color: #8d8d8d;
+                    position: relative;
+                    top: 3px;
+                }
+
+                .cardbox-base li a img {
+                    width: 25px;
+                    height: 25px;
+                    margin: 0px !important;
+                    border: 2px solid #fff;
+                }
+
+
+    /* ------------------------------- */
+    /* Cardbox Comments
+    ---------------------------------- */
+    .cardbox-comments {
+        padding: 10px 40px 20px 40px !important;
+        font-size: 0px;
+        text-align: center;
+        display: inline-block;
+    }
+
+        .cardbox-comments .comment-avatar img {
+            margin-top: 1px;
+            margin-right: 10px;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .cardbox-comments .comment-body {
+            overflow: auto;
+        }
+
+    .search {
+        position: relative;
+        right: -60px;
+        top: -40px;
+        margin-bottom: -40px;
+        border: 2px solid #f4f4f4;
+        width: 100%;
+        overflow: hidden;
+    }
+
+        .search input[type="text"] {
+            background-color: #fff;
+            line-height: 10px;
+            padding: 15px 60px 20px 10px;
+            border: none;
+            border-radius: 4px;
+            width: 350px;
+            font-family: 'Rokkitt', serif;
+            font-size: 14px;
+            color: #8d8d8d;
+            height: inherit;
+            font-weight: 700;
+        }
+
+        .search button {
+            position: absolute;
+            right: 0;
+            top: 0px;
+            border: none;
+            background-color: transparent;
+            color: #bbbbbb;
+            padding: 15px 25px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+            .search button i {
+                font-size: 20px;
+                line-height: 30px;
+                display: block;
+            }
+
+
+    /* ------------------------------- */
+    /* Author
+    ---------------------------------- */
+    .author a {
+        font-family: 'Rokkitt', serif;
+        font-size: 16px;
+        color: #00C4CF;
+    }
+
+    .author p {
+        font-family: 'Rokkitt', serif;
+        font-size: 16px;
+        color: #8d8d8d;
+    }
+</style>
+
+<div class="container-fluid gedf-wrapper">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
+                    <div class="h7">
+                        Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
+                        etc.
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">Followers</div>
+                        <div class="h5">5.2342</div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">Following</div>
+                        <div class="h5">6758</div>
+                    </li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 gedf-main">
+
+            <!--- \\\\\\\Post-->
+            <form method="post" action="/fotoEkle"    enctype="multipart/form-data">
+                <div class="card gedf-card">
+                    <!-- image-preview-filename input [CUT FROM HERE]-->
+                 
+                    <div class="card-body ">
+                        <div class="">
+                            <label for="validationTooltipUsername">FOTOĞRAF PAYLAŞ</label>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control input-group-text " name="photographtext" id="validationTooltipUsername" placeholder="Fotoğraf yazınızı yazınız" aria-describedby="validationTooltipUsernamePrepend" required>
+                                <div class="invalid-tooltip">
+                                    Lütfen Text Yazınız
+                                </div>
+                            </div>
+                            <br />
+                            <div class="input-group image-preview">
+
+                                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                <span class="input-group-btn">
+                                    <!-- image-preview-clear button -->
+                                    <button type="button"  class="btn btn-default image-preview-clear" style="display:none;">
+                                        <span class="glyphicon glyphicon-remove"></span> Clear
+                                    </button>
+                                    <!-- image-preview-input -->
+                                    <div class="btn btn-default image-preview-input">
+                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                        <span class="image-preview-input-title">Browse</span>
+                                        <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/gif"  /> <!-- rename it -->
+                                    </div>
+                                </span>
+
+                            </div>
+                            <br />
+
+                            <div class="btn-group" style="text-align:center">
+                                <button type="submit" class="btn btn-primary">PAYLAŞ</button>
+                            </div>
+                        </div>
+                    </div>
+           
+            </form>
+            </div>
+
+            @foreach (var item in Model.akisfotograflarVievModel)
+            {
+
+
+                <div class=" row cardbox shadow-lg bg-white" style="margin:15px">
+
+                    <div class="cardbox-heading">
+                        <!-- START dropdown-->
+                        <div class="dropdown float-right">
+                            <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+                                <em class="fa fa-ellipsis-h"></em>
+                            </button>
+                            <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Hide post</a>
+                                <a class="dropdown-item" href="#">Stop following</a>
+                                <a class="dropdown-item" href="#">Report</a>
+                            </div>
+                        </div><!--/ dropdown -->
+                        <div class="media m-0">
+                            <div class="d-flex mr-3">
+                                <a href=""><img class="img-fluid rounded-circle" src="data:image/png;base64, @item.userfoto" alt="User"></a>
+                            </div>
+                            <div class="media-body">
+                                <p class="m-0">@item.Name</p>
+                                <small><span><i class="icon ion-md-pin"></i>  </span></small>
+                                <small><span><i class="icon ion-md-time"></i> </span></small>
+                            </div>
+                        </div><!--/ media -->
+                    </div><!--/ cardbox-heading -->
+
+                    <div class="cardbox-item">
+                        <img class="img-fluid" src="data:image/png;base64, @item.Base64" alt="Image">
+                    </div><!--/ cardbox-item -->
+                    <div class="cardbox-base">
+
+                        <ul>
+                            <li>
+                                <a>
+                                    @if (item.isLiked)
+                                    {
+                                        <i class="fa fa-heart btnLike" style="color:red" data-foto-id="@item.PhotoId" value=@item.LikeSayisi>
+
+                                        </i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-heart btnLike" style="color:black" data-foto-id="@item.PhotoId" value=@item.LikeSayisi>
+
+                                        </i>
+                                    }
+                                </a>
+
+                            </li>
+
+
+                            <li><a><span>@item.LikeSayisi Beğeni </span></a></li>
+                        </ul>
+                    </div><!--/ cardbox-base -->
+
+
+                </div>
+
+            }
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+        </div>
+        <div class="col-md-3">
+
+
+
+            @foreach (var i in Model.vatandaslarintakipedilmeyenler)
+            {
+
+                <div class="card gedf-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Takipçi Örneği</h5>
+
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <img src="data:image/png;base64, @i.ProfilePhoto" alt="Alternate Text" style="width:50px;height:50px; border-radius:50%;" />
+                            @i.User.Username
+
+                        </h6>
+                        <p class="card-text">
+
+                            <button type="submit" value="Takip Et" id="takiple" data-usernameid="@i.User.Id">   TAKİP ET </button>
+                        </p>
+
+                    </div>
+                </div>
+                <br />
+                <br />
+                <br />
+            }
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<script>
+
+    $(document).on('click', '#close-preview', function () {
+        $('.image-preview').popover('hide');
+        // Hover befor close the preview
+        $('.image-preview').hover(
+            function () {
+                $('.image-preview').popover('show');
+            },
+            function () {
+                $('.image-preview').popover('hide');
+            }
+        );
+    });
+    $(function () {
+        // Create the close button
+        var closebtn = $('<button/>', {
+            type: "button",
+            text: 'x',
+            id: 'close-preview',
+            style: 'font-size: initial;',
+        });
+        closebtn.attr("class", "close pull-right");
+        // Set the popover default content
+        $('.image-preview').popover({
+            trigger: 'manual',
+            html: true,
+            title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
+            content: "There's no image",
+            placement: 'bottom'
+        });
+        // Clear event
+        $('.image-preview-clear').click(function () {
+            $('.image-preview').attr("data-content", "").popover('hide');
+            $('.image-preview-filename').val("");
+            $('.image-preview-clear').hide();
+            $('.image-preview-input input:file').val("");
+            $(".image-preview-input-title").text("Browse");
+        });
+        // Create the preview image
+        $(".image-preview-input input:file").change(function () {
+            var img = $('<img/>', {
+                id: 'dynamic',
+                width: 250,
+                height: 200
+            });
+            var file = this.files[0];
+            var reader = new FileReader();
+            // Set preview image into the popover data-content
+            reader.onload = function (e) {
+                $(".image-preview-input-title").text("Change");
+                $(".image-preview-clear").show();
+                $(".image-preview-filename").val(file.name);
+                img.attr('src', e.target.result);
+                $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+
+
+</script>
+
+
+<script>
+    $("body").on("contextmenu", function () {
+        alert('hop hemşerim, nereye ?');
+        return false;
+    });
+    $('body').on('click', '.btnLike', function (e) {
+        //if( $('.heart1').css('color') == "red" ){
+        //    $('.heart1').css('color', "white");
+        //}
+        //else {
+        //    $('.heart1').css('color', "red");
+        //}
+        console.log(e)
+        var foto_id = e.currentTarget.attributes["data-foto-id"].value
+
+        var begenisayisi = $('.btnLike').val();
+
+
+        let _THIS = this;
+        $.ajax({
+            url: '/like?resimid=' + foto_id,
+            method: 'post',
+
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                console.log(resp)
+                var data = JSON.parse(resp);
+                if (data.success == true) {
+                    console.log(data.message);
+                    if (data.message == "begenildi") {
+
+                        $(_THIS).css('color', "red");
+                    }
+                    else {
+                        console.log("siyahlaşmalı");
+                        $(_THIS).css('color', "black");
+                    }
+                }
+                else {
+
+
+
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+</script>
+
+
+<script>
+    $('body').on('click', '#takiple', function (e) {
+        console.log(e)
+        var user_id = e.currentTarget.attributes["data-usernameid"].value
+
+
+
+        let _THIS = this;
+        $.ajax({
+            url: '/Takip?takipedilenid=' + user_id,
+            method: 'post',
+
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                console.log(resp)
+                var data = JSON.parse(resp);
+                if (data.success == true) {
+                    console.log(data.message);
+                    if (data.message == "eildi") {
+
+                    }
+                    else {
+
+
+                    }
+                }
+                else {
+
+
+
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+</script>
