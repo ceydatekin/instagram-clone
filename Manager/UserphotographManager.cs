@@ -21,6 +21,8 @@ namespace Instagram.Manager
 
 
             var liste = kullaniciTakipKontrol.takipettiklerimigetir(sessionid);
+              
+
 
             var akis = from followers in liste
                        join users in ContextManager.GetContext().Users on followers equals users.Id
