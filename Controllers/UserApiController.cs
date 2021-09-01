@@ -21,18 +21,18 @@ namespace Instagram.Controllers
         public string kullaniciKayit([FromForm] KullaniciKayit model)
         {
 
-           // var profilePhotoId = userphotographManager.ProfilFotoEkle(model.profilePhotoFile);
+            var profilePhotoId = userphotographManager.ProfilFotoEkle(model.profilePhotoFile);
 
-           //var kaydidilenKullanici= userManager.Insert(new User
-           // {
-           //     Name = model.name,
-           //     Surname=model.surname,
-           //     Username=model.userName,
-           //     Telno = model.telno,
-           //     Mail=model.mail,
-           //     Password=model.password,
-           //     Userphotoid = int.Parse(profilePhotoId)
-           // });
+            var kaydidilenKullanici = userManager.Insert(new User
+            {
+                Name = model.name,
+                Surname = model.surname,
+                Username = model.userName,
+                Telno = model.telno,
+                Mail = model.mail,
+                Password = model.password,
+                Userphotoid = int.Parse(profilePhotoId)
+            });
 
             return JsonConvert.SerializeObject(new { success = true, message = "Tebrikkler" });
         }

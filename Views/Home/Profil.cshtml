@@ -1,9 +1,21 @@
-﻿<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+﻿@model Instagram.ViewModels.AkisViewModel
+@{
+
+    ViewData["Title"] = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <!-- FONTS --><!-- Roboto, Yellowtail, and Montserrat -->
 <style>
+    .footer{
+        visibility:hidden
+    }
     * {
         box-sizing: border-box;
         -webkit-transition: 0.3s cubic-bezier(0.75, 0, 0.2, 1), color 0.3s ease;
@@ -359,7 +371,6 @@
         width: 92%;
         max-width: 1126px;
         background-color: #f4f4f4;
-   
     }
 
     .profile-card {
@@ -669,28 +680,29 @@
                 112<br>
             </div><div class="floated profile-stat following" id="num_following">245<br></div>
         </div>
-    </div><div class="rela-block content">
-        <div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image">
-        </div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image"></div>
-        <div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image">
-        </div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image">
-        </div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image"></div>
-        <div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image"></div><div class="rela-inline image">
-        </div><div class="rela-inline image"></div><div class="rela-inline image"></div>
     </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+  
+    <div class="rela-block content">
+        @foreach (var item in Model.akisfotograflarVievModel)
+        {
+
+            <div class="rela-inline image">  <a href=""><img class="img-fluid rounded-circle" src="data:image/png;base64, @item.Base64" alt="User" style="  border-radius: 0%!important;"></a></div>
+        }
+        </div>  
+   
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 </div>
 <script>
     //https://d13yacurqjgara.cloudfront.net/users/1387536/screenshots/3115905/dribbble_20161126.png
@@ -753,17 +765,17 @@
     }
 
     // --- API Stuff ---
-    function api_call() {
-        $.getJSON('https://api.dribbble.com/v1/shots?per_page=100&access_token=d7b35bf8f107cf7310e1291a3ab25fe50bb9a7ade70ee8e46170bd4d4b256087&callback=?', function (resp) {
-            if (resp.data.length > 0) {
-                $.each(resp.data, function (i, val) {
-                    db.img[i] = { src: val.images.hidpi, desc: val.description, title: val.title, author: val.user.name, author_pic: val.user.avatar_url, link: val.html_url }
-                });
-            }
-            console.log(resp);
-            init_images();
-        });
-    }
+    //function api_call() {
+    //    $.getJSON('https://api.dribbble.com/v1/shots?per_page=100&access_token=d7b35bf8f107cf7310e1291a3ab25fe50bb9a7ade70ee8e46170bd4d4b256087&callback=?', function (resp) {
+    //        if (resp.data.length > 0) {
+    //            $.each(resp.data, function (i, val) {
+    //                db.img[i] = { src: val.images.hidpi, desc: val.description, title: val.title, author: val.user.name, author_pic: val.user.avatar_url, link: val.html_url }
+    //            });
+    //        }
+    //        console.log(resp);
+    //        init_images();
+    //    });
+    //}
 
     // --- GAME TIME ---
     $(document).ready(function () {

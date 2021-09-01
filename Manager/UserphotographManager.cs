@@ -12,8 +12,10 @@ namespace Instagram.Manager
 {
     public class UserphotographManager : Instagram.Repository.IRepository<Userphotograph>
     {
-         
-        UserphotographManager kullaniciFotoManager = new UserphotographManager(); UserfollowersManager kullaniciTakipKontrol = new UserfollowersManager();
+        instagramContext _context = ContextManager.GetContext();
+
+        // UserphotographManager kullaniciFotoManager = new UserphotographManager();
+        UserfollowersManager kullaniciTakipKontrol = new UserfollowersManager();
         PhotographManager photographManager = new PhotographManager();
         public Userphotograph GetUserFotoid(int resimid) => ContextManager.GetContext().Userphotographs.SingleOrDefault(entity => entity.Photographid == resimid);
         public AkisViewModel AkislariGetir(int sessionid)
@@ -50,6 +52,43 @@ namespace Instagram.Manager
 
             return response;
         }
+
+
+        public AkisViewModel ProfilAkisi(int sessionid)
+        {
+
+
+            var liste = kullaniciTakipKontrol.takipettiklerimigetir(sessionid);
+
+
+
+            var akis = from followers in liste
+                       join users in ContextManager.GetContext().Users on followers equals users.Id
+                       join kullaniciFotograf in ContextManager.GetContext().Userphotographs on sessionid equals kullaniciFotograf.Userid
+                       join fotograflar in ContextManager.GetContext().Photographs on kullaniciFotograf.Photographid equals fotograflar.Id
+                       select new
+                       {
+                           userfoto = photographManager.Getfoto(users.Userphotoid).Photograph1,
+                           Name = users.Name + " " + users.Surname,
+                           Username = users.Username,
+                           Base64 = fotograflar.Photograph1,
+                           Text = fotograflar.Photographtext,
+                           PhotoId = fotograflar.Id,
+                           KullaniciFotografId = kullaniciFotograf.Id,
+                           LikeSayisi = ContextManager.GetContext().Likes.Where(s => s.Userphotographid == kullaniciFotograf.Id).ToList().Count,
+                           isLiked = ContextManager.GetContext().Likes.SingleOrDefault(s => s.Userphotographid == kullaniciFotograf.Id && s.Userid == sessionid) == null ? false : true
+                           //vatandaslarintakipedilmeyenler = kullaniciTakipKontrol.takipetmediklerimigetir(sessionid)
+                       };
+
+            var listAkisFotogramlar = JsonConvert.DeserializeObject<List<akisfotograflarVievModel>>(JsonConvert.SerializeObject(akis));
+
+            var response = new AkisViewModel();
+            response.akisfotograflarVievModel = listAkisFotogramlar;
+            response.vatandaslarintakipedilmeyenler = kullaniciTakipKontrol.takipetmediklerimigetir(sessionid);
+
+            return response;
+        }
+
 
         public string FotoEkle(IFormFile file, string photographtext, string user_id)
         {
@@ -105,17 +144,27 @@ namespace Instagram.Manager
             int userfotoid = photographManager.Insert(entity).Id;
             return entity.Id + "";
         }
+        public Userphotograph Insert(Userphotograph entity)
+        {
+
+            _context.Set<Userphotograph>().Add(entity);
+            Save();
+            return entity;
+
+        }
         private void KullaniciFotografTablosunaEkle(string id, string user_id)
         {
 
-            var idd = user_id;
-            kullaniciFotoManager.Insert(new Userphotograph
+   
+           Insert(new Userphotograph
             {
                 Userid = int.Parse(user_id),
                 Photographid = int.Parse(id)
             });
 
         }
+
+        
         private string EnsureCorrectFilename(string filename)
         {
             if (filename.Contains("\\"))

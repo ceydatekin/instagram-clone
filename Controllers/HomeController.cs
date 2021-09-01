@@ -30,7 +30,7 @@ namespace Instagram.Controllers
             sessionHelper.Set("kullaniciid", "10");
 
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             //var aa = sessionHelper.Get("kullanici_id");
@@ -48,11 +48,13 @@ namespace Instagram.Controllers
         public IActionResult Profil()
         {
 
+
             if (sessionHelper.Get("kullanici_adi") == null)
             {
                 return RedirectToAction("Login");
             }
-            return View();
+
+            return View(userphotographManager.ProfilAkisi(int.Parse(sessionHelper.Get("kullanici_id"))));
         }
         
         public IActionResult Login()
