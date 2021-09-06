@@ -28,7 +28,7 @@ namespace Instagram.Controllers
             _httpContextAccessor = httpContextAccessor;
             sessionHelper = new SessionHelper(_httpContextAccessor);
             sessionHelper.Set("kullaniciid", "10");
-
+            
         }
         [HttpGet]
         public IActionResult Index()

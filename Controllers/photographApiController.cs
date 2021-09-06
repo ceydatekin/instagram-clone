@@ -23,6 +23,8 @@ namespace Instagram.Controllers
 
 
         UserManager usermanager = new UserManager();
+        PhotographManager fotoManager = new PhotographManager();
+        UserphotographManager kullaniciFotoManager = new UserphotographManager();
         instagramContext _context = ContextManager.GetContext();
         private readonly ILogger<photographApiController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -37,8 +39,6 @@ namespace Instagram.Controllers
         }
 
 
-        PhotographManager fotoManager = new PhotographManager();
-        UserphotographManager kullaniciFotoManager = new UserphotographManager();
         
         [Route ("fotoEkle")]
         [HttpPost]

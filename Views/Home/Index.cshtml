@@ -444,7 +444,7 @@
                                     }
                                     else
                                     {
-                                        <i class="fa fa-heart btnLike" style="color:black" data-foto-id="@item.PhotoId" value=@item.LikeSayisi>
+                                        <i class="fa fa-heart btnLike" style="color:black" data-foto-id="@item.PhotoId" data-username="@item.Username" value=@item.LikeSayisi>
 
                                         </i>
                                     }
@@ -584,8 +584,8 @@
         //    $('.heart1').css('color', "red");
         //}
         console.log(e)
-        var foto_id = e.currentTarget.attributes["data-foto-id"].value
-
+        var foto_id = e.currentTarget.attributes["data-foto-id"].value;
+        /*var user_name = e.currentTarget.attributes["data-user-id"].value;*/
         var begenisayisi = $('.btnLike').val();
 
 
@@ -604,6 +604,12 @@
                     if (data.message == "begenildi") {
 
                         $(_THIS).css('color', "red");
+
+
+                        connection.invoke("NotifyForLike", " asdsa", "sdgdrf").catch(function (err) {
+             
+                            return console.error(err.toString());
+                        });
                     }
                     else {
                         console.log("siyahlaşmalı");
@@ -643,8 +649,8 @@
                 var data = JSON.parse(resp);
                 if (data.success == true) {
                     console.log(data.message);
-                    if (data.message == "eildi") {
-
+                    if (data.message == "edildi") {
+                        
                     }
                     else {
 

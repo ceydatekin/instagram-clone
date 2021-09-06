@@ -40,7 +40,7 @@ namespace Instagram.Controllers
             var sessionid = int.Parse(sessionHelper.Get("kullanici_id"));
              var userphotograph = userfotokontrol.GetUserFotoid(resimid);
 
-            var check = begenmeKontrol.GetById(entity => entity.Userphotographid == userphotograph.Id && entity.Userid == sessionid);
+            var check = ManagerCreator.CreateLikeManager().GetById(entity => entity.Userphotographid == userphotograph.Id && entity.Userid == sessionid);
 
             if (check == null)
             {

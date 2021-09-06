@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Instagram
 {
     public class Startup
@@ -16,12 +17,14 @@ namespace Instagram
 
         public void ConfigureServices(IServiceCollection services)
         {
+         
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddDbContext<InstagramContext.instagramContext>();
             services.AddSignalR(); 
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
         public Startup(IConfiguration configuration)
         {
@@ -29,6 +32,9 @@ namespace Instagram
         }
 
         public IConfiguration Configuration { get; }
+
+
+     
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,11 +52,14 @@ namespace Instagram
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+         
             app.UseRouting();
             app.UseSession();
             app.UseAuthorization();
-
+            app.UseEndpoints(endpoints =>
+            { 
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
