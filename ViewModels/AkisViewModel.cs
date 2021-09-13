@@ -23,4 +23,5 @@ namespace Instagram.ViewModels
         public string userfoto { get; set; }
         public bool isLiked { get; set; }
     }
+
 }

@@ -5,7 +5,6 @@
 @using Microsoft.AspNetCore.Http;
 
 
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -22,6 +21,11 @@
         crossorigin="anonymous"></script>
 
 <style>
+    #takiple {
+        border-radius: 10px;
+        border-color: darkgray;
+        background-color: #5f9ea0a3;
+    } 
     .fade {
         opacity: 1 !important;
         -webkit-transition: opacity .15s linear;
@@ -187,7 +191,7 @@
 
 
     /* ------------------------------- */
-    /* Cardbox Base
+    /* Cardbox Bais
     ---------------------------------- */
     .cardbox-base {
         border-bottom: 2px solid #f4f4f4;
@@ -338,29 +342,19 @@
             <div class="card">
                 <div class="card-body">
 
-                    <div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
+
+                    <div class="h7 text-muted">İsim Soyisim : </div>
                     <div class="h7">
-                        Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
-                        etc.
+                        Username: 
                     </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="h6 text-muted">Followers</div>
-                        <div class="h5">5.2342</div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="h6 text-muted">Following</div>
-                        <div class="h5">6758</div>
-                    </li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+
             </div>
         </div>
         <div class="col-md-6 gedf-main">
 
             <!--- \\\\\\\Post-->
-            <form method="post" action="/fotoEkle" enctype="multipart/form-data">
+            <form method="post" action="/fotoEkle" id="fotoEkleid" enctype="multipart/form-data">
                 <div class="card gedf-card">
                     <!-- image-preview-filename input [CUT FROM HERE]-->
 
@@ -437,6 +431,9 @@
                     <img class="img-fluid" src="data:image/png;base64, @item.Base64" alt="Image">
                 </div><!--/ cardbox-item -->
                 <div class="cardbox-base">
+                    <p style="margin-left:10px; position:absolute;"> Fotoğraf Paylaşırken Ne Hissettiniz:  @item.Text</p>
+                </div >
+                <div class="cardbox-base">
 
                     <ul>
                         <li>
@@ -449,7 +446,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fa fa-heart btnLike" style="color:black" data-foto-id="@item.PhotoId" data-username="@item.Username" value=@item.LikeSayisi>
+                                    <i class="fa fa-heart btnLike" style="color:black" data-foto-id="@item.PhotoId" data-user-name="@item.Username" value=@item.LikeSayisi>
 
                                     </i>
                                 }
@@ -458,7 +455,7 @@
                         </li>
 
 
-                        <li><a><span>@item.LikeSayisi Beğeni </span></a></li>
+                        <li><a><span class="likemm">@item.LikeSayisi Beğeni </span></a></li>
                     </ul>
                 </div><!--/ cardbox-base -->
 
@@ -496,7 +493,7 @@
                     </h6>
                     <p class="card-text">
 
-                        <button type="submit" value="Takip Et" id="takiple" data-usernameid="@i.User.Id">   TAKİP ET </button>
+                        <button type="submit" value="Takip Et" id="takiple" data-usernameid="@i.User.Id" data-username="@i.User.Username" data-kullaniciid='@Context.Session.GetString("kullanici_adi")'>   TAKİP ET </button>
                     </p>
 
                 </div>
@@ -506,173 +503,32 @@
             <br />
         }
     </div>
+    <div class="toast">ts
+        <div class="toast-header">
+            Toast Header
+        </div>
+        <div class="toast-body">
+            Some text inside the toast body
+        </div>
+    </div>
 </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-<script>
-
-    $(document).on('click', '#close-preview', function () {
-        $('.image-preview').popover('hide');
-        // Hover befor close the preview
-        $('.image-preview').hover(
-            function () {
-                $('.image-preview').popover('show');
-            },
-            function () {
-                $('.image-preview').popover('hide');
-            }
-        );
-    });
-    $(function () {
-        // Create the close button
-        var closebtn = $('<button/>', {
-            type: "button",
-            text: 'x',
-            id: 'close-preview',
-            style: 'font-size: initial;',
-        });
-        closebtn.attr("class", "close pull-right");
-        // Set the popover default content
-        $('.image-preview').popover({
-            trigger: 'manual',
-            html: true,
-            title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
-            content: "There's no image",
-            placement: 'bottom'
-        });
-        // Clear event
-        $('.image-preview-clear').click(function () {
-            $('.image-preview').attr("data-content", "").popover('hide');
-            $('.image-preview-filename').val("");
-            $('.image-preview-clear').hide();
-            $('.image-preview-input input:file').val("");
-            $(".image-preview-input-title").text("Browse");
-        });
-        // Create the preview image
-        $(".image-preview-input input:file").change(function () {
-            var img = $('<img/>', {
-                id: 'dynamic',
-                width: 250,
-                height: 200
-            });
-            var file = this.files[0];
-            var reader = new FileReader();
-            // Set preview image into the popover data-content
-            reader.onload = function (e) {
-                $(".image-preview-input-title").text("Change");
-                $(".image-preview-clear").show();
-                $(".image-preview-filename").val(file.name);
-                img.attr('src', e.target.result);
-                $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
-            }
-            reader.readAsDataURL(file);
-        });
-    });
-
-
-</script>
-
-
-<script>
-    $("body").on("contextmenu", function () {
-        alert('hop hemşerim, nereye ?');
-        return false;
-    });
-    $('body').on('click', '.btnLike', function (e) {
-        //if( $('.heart1').css('color') == "red" ){
-        //    $('.heart1').css('color', "white");
-        //}
-        //else {
-        //    $('.heart1').css('color', "red");
-        //}
-        console.log(e)
-        var foto_id = e.currentTarget.attributes["data-foto-id"].value;
-        var username = e.currentTarget.attributes["data-user-name"].value
-
-       
-        var begenisayisi = $('.btnLike').val();
-
-
-        let _THIS = this;
-        $.ajax({
-            url: '/like?resimid=' + foto_id,
-            method: 'post',
-
-            processData: false,
-            contentType: false,
-            success: function (resp) {
-                console.log(resp)
-                var data = JSON.parse(resp);
-                if (data.success == true) {
-                    console.log(data.message);
-                    if (data.message == "begenildi") {
-
-                        $(_THIS).css('color', "red");
-
-
-                        connection.invoke("NotifyForLike", '@Context.Session.GetString("kullanici_adi")',username," kullanıcı sizin fotonuzu beğendi :)").catch(function (err) {
-
-                            return console.error(err.toString());
-                        });
-                    }
-                    else {
-                        console.log("siyahlaşmalı");
-                        $(_THIS).css('color', "black");
-                    }
-                }
-                else {
+<script src="~/js/HomePage.js"></script>
 
 
 
-                }
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        });
-    });
-</script>
-
-
-<script>
-    $('body').on('click', '#takiple', function (e) {
-        console.log(e)
-        var user_id = e.currentTarget.attributes["data-usernameid"].value
 
 
 
-        let _THIS = this;
-        $.ajax({
-            url: '/Takip?takipedilenid=' + user_id,
-            method: 'post',
-
-            processData: false,
-            contentType: false,
-            success: function (resp) {
-                console.log(resp)
-                var data = JSON.parse(resp);
-                if (data.success == true) {
-                    console.log(data.message);
-                    if (data.message == "edildi") {
-
-                    }
-                    else {
 
 
-                    }
-                }
-                else {
-
-
-
-                }
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        });
-    });
-</script>
+@*<script>
+    $(document).ready(function () {
+        var deger = @ViewBag.ct
+        alert(deger)
+    })
+</script>*@

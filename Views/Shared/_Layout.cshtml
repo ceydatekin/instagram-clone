@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,6 +11,10 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
     <style>
         .social-part .fa {
             padding-right: 20px;
@@ -88,7 +94,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color:black">Ana Sayfa <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="../Home/Index" style="color:black">Ana Sayfa <span class="sr-only">(current)</span></a>
                     </li>
 
                     <li class="nav-item dropdown dmenu">
@@ -103,6 +109,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" style="color:black">Keşfet</a>
+                    </li>
+                    <li class="nav-item ">
+                        <form method="post" action="/cikisyap">
+                            <button type="submit" id="byby" class="close" aria-label="Close" style=" font-size: -webkit-xxx-large;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </form>
                     </li>
 
 
@@ -154,5 +167,10 @@
             $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
         });
     });
+
+   
+
+
+
 </script>
 

@@ -23,48 +23,12 @@ namespace Instagram.Manager
 
 
             var liste = kullaniciTakipKontrol.takipettiklerimigetir(sessionid);
-              
+
 
 
             var akis = from followers in liste
                        join users in ContextManager.GetContext().Users on followers equals users.Id
                        join kullaniciFotograf in ContextManager.GetContext().Userphotographs on followers equals kullaniciFotograf.Userid
-                       join fotograflar in ContextManager.GetContext().Photographs on kullaniciFotograf.Photographid equals fotograflar.Id
-                       select new
-                       {
-                           userfoto = photographManager.Getfoto(users.Userphotoid).Photograph1,
-                           Name = users.Name + " " + users.Surname,
-                           Username = users.Username,
-                           Base64 = fotograflar.Photograph1,
-                           Text = fotograflar.Photographtext,
-                           PhotoId = fotograflar.Id,
-                           KullaniciFotografId = kullaniciFotograf.Id,
-                           LikeSayisi = ContextManager.GetContext().Likes.Where(s => s.Userphotographid == kullaniciFotograf.Id).ToList().Count,
-                           isLiked = ContextManager.GetContext().Likes.SingleOrDefault(s => s.Userphotographid == kullaniciFotograf.Id && s.Userid == sessionid) == null ? false: true
-                           //vatandaslarintakipedilmeyenler = kullaniciTakipKontrol.takipetmediklerimigetir(sessionid)
-                       };
-             
-            var listAkisFotogramlar = JsonConvert.DeserializeObject<List<akisfotograflarVievModel>>(JsonConvert.SerializeObject(akis)); 
-
-            var response = new AkisViewModel();
-            response.akisfotograflarVievModel = listAkisFotogramlar;
-            response.vatandaslarintakipedilmeyenler = kullaniciTakipKontrol.takipetmediklerimigetir(sessionid);
-
-            return response;
-        }
-
-
-        public AkisViewModel ProfilAkisi(int sessionid)
-        {
-
-
-            var liste = kullaniciTakipKontrol.takipettiklerimigetir(sessionid);
-
-
-
-            var akis = from followers in liste
-                       join users in ContextManager.GetContext().Users on followers equals users.Id
-                       join kullaniciFotograf in ContextManager.GetContext().Userphotographs on sessionid equals kullaniciFotograf.Userid
                        join fotograflar in ContextManager.GetContext().Photographs on kullaniciFotograf.Photographid equals fotograflar.Id
                        select new
                        {
@@ -82,10 +46,43 @@ namespace Instagram.Manager
 
             var listAkisFotogramlar = JsonConvert.DeserializeObject<List<akisfotograflarVievModel>>(JsonConvert.SerializeObject(akis));
 
-            var response = new AkisViewModel();
+            var response = new AkisViewModel();   
             response.akisfotograflarVievModel = listAkisFotogramlar;
             response.vatandaslarintakipedilmeyenler = kullaniciTakipKontrol.takipetmediklerimigetir(sessionid);
 
+            return response;
+        }
+
+
+        public ProfilViewModel ProfilAkisi(int sessionid, int fotoid)
+        {
+
+            var userfotot = photographManager.Getfoto(fotoid).Photograph1;
+            var followersCount = kullaniciTakipKontrol.TakipciBilgisiGetir(sessionid);
+            var takipettiklerininCount1 = kullaniciTakipKontrol.takipettiklerimigetir(sessionid).Count();
+            var fotosayisinibul = photographManager.FotosayisiniGetir(sessionid);
+            var testttttt = from user in ContextManager.GetContext().Users
+                            join kullaniciFotograf in ContextManager.GetContext().Userphotographs on sessionid equals kullaniciFotograf.Userid
+                            join fotograflar in ContextManager.GetContext().Photographs on kullaniciFotograf.Photographid equals fotograflar.Id
+                            where user.Id == sessionid
+                            select new
+                            {
+                                userfoto = userfotot,
+                                Name = user.Name + " " + user.Surname,
+                                Username = user.Username,
+                                Base64 = fotograflar.Photograph1,
+                                Text = fotograflar.Photographtext,
+                                PhotoId = fotograflar.Id
+                            };
+
+            var listAkisFotogramlar = JsonConvert.DeserializeObject<List<profilfotograflarVievModel>>(JsonConvert.SerializeObject(testttttt));
+
+            var response = new ProfilViewModel();
+            response.profilfotograflarVievModel = listAkisFotogramlar;
+            response.FollowersCount = followersCount;
+            response.takipettiklerininCount = takipettiklerininCount1;
+            response.fotosayisi = fotosayisinibul;
+            response.userfoto = userfotot;
             return response;
         }
 
@@ -155,8 +152,8 @@ namespace Instagram.Manager
         private void KullaniciFotografTablosunaEkle(string id, string user_id)
         {
 
-   
-           Insert(new Userphotograph
+
+            Insert(new Userphotograph
             {
                 Userid = int.Parse(user_id),
                 Photographid = int.Parse(id)
@@ -164,7 +161,7 @@ namespace Instagram.Manager
 
         }
 
-        
+
         private string EnsureCorrectFilename(string filename)
         {
             if (filename.Contains("\\"))

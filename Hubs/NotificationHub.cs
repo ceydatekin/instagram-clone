@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace Instagram
+namespace Instagram.Hubs
 {
     public class NotificationHub : Hub
     {
@@ -19,9 +19,23 @@ namespace Instagram
         {
             this.httpContextAccessor = httpContextAccessor;
         }
-        public async Task SendMessage(string user, string message)
+        public async Task NotifyForFollow(string user, string receiverUserName, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            if (Connections.list.SingleOrDefault(s => s.Username == receiverUserName) != null)
+            {
+                await Clients.Client(Connections.list.SingleOrDefault(s => s.Username == receiverUserName).ConnectionId).SendAsync("GetNotificationForFollow", user, message);
+            }
+            else
+            {
+               
+            }
+
+        }
+        public async Task NotifyForShare(string user, string message)
+        {
+                await Clients.All.SendAsync("GetNotificationForShare", user, message);
+         
+
         }
         public async Task NotifyForLike(string user, string receiverUserName, string message)
         {

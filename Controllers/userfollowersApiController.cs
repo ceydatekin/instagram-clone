@@ -48,12 +48,12 @@ namespace Instagram.Controllers
                     Userid = sessionid
 
                 });
-                return JsonConvert.SerializeObject(new { success = true, message = "Takip edilmeye başlanıldı!" });
+                return JsonConvert.SerializeObject(new { success = true, follow = true, message = "Takip edilmeye başlanıldı!" });
             } 
             else
             {
                 kullanicitakipciManager.Delete(entity);
-                return JsonConvert.SerializeObject(new { success = true, message = "Takipten çıkıldı!" });
+                return JsonConvert.SerializeObject(new { success = true,follow = false, message = "Takipten çıkıldı!" });
 
             }
 

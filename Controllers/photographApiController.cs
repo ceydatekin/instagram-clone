@@ -42,12 +42,12 @@ namespace Instagram.Controllers
         
         [Route ("fotoEkle")]
         [HttpPost]
-        public string FotoKayitAsync(IFormFile file, string photographtext)
+        public IActionResult FotoKayitAsync(IFormFile file, string photographtext)
         {
-
-
-          return kullaniciFotoManager.FotoEkle(file, photographtext, _httpContextAccessor.HttpContext.Session.GetString("kullanici_id"));
-        }
+            kullaniciFotoManager.FotoEkle(file, photographtext, _httpContextAccessor.HttpContext.Session.GetString("kullanici_id"));
+             
+            return RedirectToAction("Index","Home");
+           }
       
 
 

@@ -1,13 +1,22 @@
 ﻿
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 <style>
-
+    body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+        background: rgb(32,29,82);
+        background: linear-gradient( 90deg, rgba(32,29,82,1) 0%, rgba(170,170,186,1) 35%, rgba(146,171,176,1) 72%);
+    }
 
     .panel-login {
+        height: 328px;
         border-color: #ccc;
         -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
         -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -44,7 +53,6 @@
                 height: 1px;
                 background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
                 background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-            
                 background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
             }
 
@@ -115,15 +123,15 @@
             border-color: #1CA347;
         }
 </style>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
+        <div class="col-md-6 col-md-offset-3" style="top: 90px; border-radius: 50px; background-color: #46586754; height: 550px ">
+            <div class="panel panel-login" style="border: 19px solid transparent; border-radius: 66px; margin-bottom: 52px; height:536px">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
@@ -166,7 +174,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="register-form" class="col-lg-12" style="visibility:hidden">
+                        <div id="register-form" class="col-lg-12" style="visibility:hidden ; ">
                             <div class="form-group">
                                 <input type="text" name="name1" id="name" tabindex="1" class="form-control" placeholder="İsim" value="">
                             </div>
@@ -204,116 +212,9 @@
 </div>
 
 
-<script>
-    $('body').on('click', '#register-submit', function () {
-
-        var name = $('#name').val();
-        var surname = $('#surname').val();
-        var userName = $('#firstusername').val();
-        var telno = $('#firstpassword').val();
-        var mail = $('#mail').val();
-        var password = $('#telno').val();
-
-        var formdata = new FormData();
-
-        formdata.append('name', name);
-        formdata.append('surname', surname);
-        formdata.append('userName', userName);
-        formdata.append('telno', telno);
-        formdata.append('mail', mail);
-        formdata.append('password', password);
-       formdata.append('profilePhotoFile', $('#profilePhotoFile')[0].files[0]);
-
-        $.ajax({
-            url: '/KullaniciKaydet',
-            method: 'post',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: function (resp) {
-                console.log(resp)
-                var data = JSON.parse(resp)
-                if (data.success == true) {
-                    $('#ogrenciEkle').modal('hide')
-                 
-                    console.log(resp.message);
-                }
-                else if (data.success == false)
-                    console.log("ders eklenirken hata olust")
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        });
-    });
-</script>
-
-<script>
-    $('body').on('click', '#login-submit', function () {
-
-        var kullaniciAdi = $('#username').val();
-        var sifre = $('#password').val();
-
-        var formdata = new FormData();
-
-        formdata.append('kullaniciAdi', kullaniciAdi);
-        formdata.append('sifre', sifre);
-
-        $.ajax({
-            url: '/girisYapPost',
-            method: 'post',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: function (resp) {
-
-                if (resp == true) {
-                    window.location.href = "/"
-                    console.log("buradayız2");
-                }
-                else {
-                    alert("hatalı Giriş")
-                    window.location.reload(2);
-                    console.log("buradayız3");
 
 
-                }
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        });
-    });
-</script>
 
 
-<script>
-
-    $(function () {
-        var log = document.getElementById('login-form');
-        var rag = document.getElementById('register-form');
-
-        $('#login-form-link').click(function (e) {
-            rag.style.visibility = 'hidden';
-            log.style.visibility = 'visible';
-            $("#login-form").delay(100).fadeIn(100);
-            $("#register-form").fadeOut(100);
-            $('#register-form-link').removeClass('active');
-            $(this).addClass('active');
-            e.preventDefault();
-        });
-        $('#register-form-link').click(function (e) {
-
-            rag.style.visibility = 'visible';
-            log.style.visibility = 'hidden';
-            $("#register-form").delay(100).fadeIn(100);
-            $("#login-form").fadeOut(100);
-            $('#login-form-link').removeClass('active');
-            $(this).addClass('active');
-            e.preventDefault();
-        });
-
-    });
-
-</script>
+<script src="~/js/LoginPage.js"></script>
 

@@ -58,7 +58,7 @@ namespace Instagram
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             { 
-                endpoints.MapHub<NotificationHub>("/notificationHub");
+                endpoints.MapHub<Hubs.NotificationHub>("/notificationHub");
             });
             app.UseEndpoints(endpoints =>
             {

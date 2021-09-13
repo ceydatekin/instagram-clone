@@ -21,6 +21,7 @@ namespace Instagram.Controllers
         private readonly ILogger<likeApiController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
         SessionHelper sessionHelper;
+     
 
         public likeApiController(ILogger<likeApiController> logger, IHttpContextAccessor httpContextAccessor)
         {
@@ -50,7 +51,7 @@ namespace Instagram.Controllers
                
 
             });
-                return JsonConvert.SerializeObject(new { success = true, message = "begenildi"});
+                return JsonConvert.SerializeObject(new { success = true, message = "begenildi" });
             }
             else
             {
@@ -65,8 +66,8 @@ namespace Instagram.Controllers
         [HttpPost]
         public string Begenisayi(int resimid)
         {
-            var userphotograph = userfotokontrol.GetUserFotoid(resimid);
 
+            var userphotograph = userfotokontrol.GetUserFotoid(resimid);
             return JsonConvert.SerializeObject(new { success = true, takipcisayisi = begenmeKontrol.BegeniSayisiniGetir(userphotograph.Id )});
 
         }

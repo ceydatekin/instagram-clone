@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Instagram.Helpers;
 using Instagram.InstagramContext;
 using Instagram.Manager;
+using Newtonsoft.Json;
 
 namespace Instagram.Controllers
 {
@@ -31,12 +32,17 @@ namespace Instagram.Controllers
             
         }
         [HttpGet]
+        [Route("Home/Index")]
+        [Route("")]
         public IActionResult Index()
         {
             //var aa = sessionHelper.Get("kullanici_id");
 
-
-            if (sessionHelper.Get("kullanici_adi") == null)
+            var a = ViewBag.ct;
+            // hey theree
+            //
+            var currentUser = sessionHelper.Get("kullanici_adi");
+            if (String.IsNullOrEmpty(sessionHelper.Get("kullanici_adi")))
             {
                 return RedirectToAction("Login");
             }
@@ -54,17 +60,27 @@ namespace Instagram.Controllers
                 return RedirectToAction("Login");
             }
 
-            return View(userphotographManager.ProfilAkisi(int.Parse(sessionHelper.Get("kullanici_id"))));
+            return View(userphotographManager.ProfilAkisi(int.Parse(sessionHelper.Get("kullanici_id")),int.Parse(sessionHelper.Get("kullanici_foto"))));
         }
-        
+
         public IActionResult Login()
         {
-
-            if (sessionHelper.Get("kullanici_adi") != null)
+            // Tamam gibii :)
+            //çok teşekkür ederimmmm
+            // burada yanlış viewe döndüğü için infinite loop olmuş. LOgin indexe , inde logine atıyr. 
+            // anladım ama bir sorum var biz session null değilse index demiştik orda nullsa login dediğimiz içinmi oldu
+            // evet. çünkü çıkıtaş boşluk atıyoruz, null yapmıyoruzz
+            //anladımmm şimdi ! Harikaaaa 
+            // şimdi ki adımımız nedir ?
+            //size soracaktım 
+            if (String.IsNullOrEmpty(sessionHelper.Get("kullanici_adi")))
             {
-                return RedirectToAction("Index");
+                // Eğer kullanıcı giriş yapmadıysa, Login View yönlenecek
+                return View();
+
             }
-            return View();
+            // Eğer kullancıı giriş yaptıysa, Anasayfaaa
+            return RedirectToAction("Index");
         }
 
         [Route("girisYapPost")]
@@ -81,6 +97,8 @@ namespace Instagram.Controllers
             {
                 sessionHelper.Set("kullanici_adi", model.kullaniciAdi);
                 sessionHelper.Set("kullanici_id", user.Id);
+                sessionHelper.Set("kullanici_foto", user.Userphotoid);
+
                 return true;
 
             }
@@ -97,8 +115,18 @@ namespace Instagram.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-    }
 
+
+        [Route("cikisyap")]
+        [HttpPost]
+        public IActionResult logout()
+        {
+            sessionHelper.Set("kullanici_adi", "");
+            return View("Login");
+
+        }
+
+    }
 
     public class KullaniciKontrolModel
     {
