@@ -354,48 +354,49 @@
         <div class="col-md-6 gedf-main">
 
             <!--- \\\\\\\Post-->
-            <form method="post" action="/fotoEkle" id="fotoEkleid" enctype="multipart/form-data">
-                <div class="card gedf-card">
-                    <!-- image-preview-filename input [CUT FROM HERE]-->
+            @*<form method="post" action="/fotoEkle" id="fotoEkleid" enctype="multipart/form-data">*@
+            <div class="card gedf-card">
+                <!-- image-preview-filename input [CUT FROM HERE]-->
 
-                    <div class="card-body ">
-                        <div class="">
-                            <label for="validationTooltipUsername">FOTOĞRAF PAYLAŞ</label>
-                            <div class="input-group">
+                <div class="card-body ">
+                    <div class="">
+                        <label for="validationTooltipUsername">FOTOĞRAF PAYLAŞ</label>
+                        <div class="input-group">
 
-                                <input type="text" class="form-control input-group-text " name="photographtext" id="validationTooltipUsername" placeholder="Fotoğraf yazınızı yazınız" aria-describedby="validationTooltipUsernamePrepend" required>
-                                <div class="invalid-tooltip">
-                                    Lütfen Text Yazınız
-                                </div>
-                            </div>
-                            <br />
-                            <div class="input-group image-preview">
-
-                                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                                <span class="input-group-btn">
-                                    <!-- image-preview-clear button -->
-                                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                        <span class="glyphicon glyphicon-remove"></span> Clear
-                                    </button>
-                                    <!-- image-preview-input -->
-                                    <div class="btn btn-default image-preview-input">
-                                        <span class="glyphicon glyphicon-folder-open"></span>
-                                        <span class="image-preview-input-title">Browse</span>
-                                        <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/gif" /> <!-- rename it -->
-                                    </div>
-                                </span>
-
-                            </div>
-                            <br />
-
-                            <div class="btn-group" style="text-align:center">
-                                <button type="submit" class="btn btn-primary">PAYLAŞ</button>
+                            <input type="text" class="form-control input-group-text " name="photographtext" id="photographtext" placeholder="Fotoğraf yazınızı yazınız" aria-describedby="validationTooltipUsernamePrepend" required>
+                            <div class="invalid-tooltip">
+                                Lütfen Text Yazınız
                             </div>
                         </div>
-                    </div>
+                        <br />
+                        <div class="input-group image-preview">
 
-            </form>
-        </div>
+                            <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                    <span class="glyphicon glyphicon-remove"></span> Clear
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                    <span class="image-preview-input-title">Browse</span>
+                                    <input type="file" tabindex="2" class="form-control" name="file" id="file" accept="image/png, image/jpeg, image/gif" />
+                                
+                                </div>
+                            </span>
+
+                        </div>
+                        <br />
+
+                        <div class="btn-group" style="text-align:center">
+                            <button type="submit" id="sharebtn" class="btn btn-primary">PAYLAŞ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*</form>*@
+
 
         @foreach (var item in Model.akisfotograflarVievModel)
         {

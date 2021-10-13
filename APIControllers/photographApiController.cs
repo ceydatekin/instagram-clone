@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Instagram.InstagramContext;
 using Microsoft.Extensions.Logging;
+
 using Instagram.Helpers;
 using Instagram.ViewModels;
 
@@ -42,15 +43,21 @@ namespace Instagram.Controllers
         
         [Route ("fotoEkle")]
         [HttpPost]
-        public IActionResult FotoKayitAsync(IFormFile file, string photographtext)
+        public string FotoKayitAsync([FromForm] FotoKayit model)
         {
-            kullaniciFotoManager.FotoEkle(file, photographtext, _httpContextAccessor.HttpContext.Session.GetString("kullanici_id"));
-             
-            return RedirectToAction("Index","Home");
-           }
+            var files = Request.Form.Files;
+           kullaniciFotoManager.FotoEkle(model.file, model.photographtext, _httpContextAccessor.HttpContext.Session.GetString("kullanici_id"));
+            return JsonConvert.SerializeObject(new { success = true });
+        }
       
 
 
+    }
+
+    public class FotoKayit
+    {
+        public string photographtext { get; set; }
+        public IFormFile file { get; set; }
 
 
     }

@@ -63,7 +63,7 @@ $('body').on('click', '#takiple', function (e) {
     var user_id = e.currentTarget.attributes["data-usernameid"].value
     var username = e.currentTarget.attributes["data-username"].value
     var kullaniciid = e.currentTarget.attributes["data-kullaniciid"].value
- 
+
 
     let _THIS = this;
     $.ajax({
@@ -105,52 +105,66 @@ $('body').on('click', '#takiple', function (e) {
     });
 });
 //foto ekleme reel time kodu
-$('form#fotoekleid').submit(function () {
-    alert('ct')
+//$('form').submit(function () {
+//    alert('ct')
+//    $.ajax({
+//        url: $('').attr('action'),
+//        method: 'post',
+
+//        data: $('form#fotoEkleid').serialize(),
+//        success: function (e) {
+//            var jsonResp = JSON.parse(e);
+//            alert('asdsad')
+//            connection.invoke("GetNotificationForShare", '@Context.Session.GetString("kullanici_adi")', " paylaştı :)").then((resp) => {
+//                console.log('drip coffee rocks!')
+//            }).catch(function (err) {
+//                console.log("denemeeeeeeeee")
+//                return console.error(err.toString());
+//            });
+
+//            }
+//    });
+
+//    return false;
+//});
+$('body').on('click', '#sharebtn', function () {
+
+    var photographtext = $('#photographtext').val();
+
+
+
+    var formdata = new FormData();
+
+    formdata.append('photographtext', photographtext);
+    formdata.append('file', $('#file')[0].files[0]);
+
     $.ajax({
-        url: $('form#fotoekleid').attr('action'),
-        type: 'POST',
-        data: $('form#fotoekleid').serialize(),
-        success: function (e) {
-            var jsonResp = JSON.parse(e);
-            //alert('asdsad')
-            //connection.invoke("GetNotificationForShare", '@Context.Session.GetString("kullanici_adi")', " paylaştı :)").then((resp) => {
-            //    console.log('drip coffee rocks!')
-            //}).catch(function (err) {
-            //    console.log("denemeeeeeeeee")
-            //    return console.error(err.toString());
-            //});
+        url: '/fotoEkle',
+        method: 'post',
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: function (resp) {
+            console.log(resp)
+            var data = JSON.parse(resp)
+            console.log(data.success);
 
+     
+            if (data.success == true) {
+                connection.invoke("NotifyForShare", '@Context.Session.GetString("kullanici_adi")', " paylaştı :)").then((resp) => {
+                    console.log('drip coffee rocks!')
+                }).catch(function (err) {
+                    console.log("denemeeeeeeeee")
+                    return console.error(err.toString());
+                });
             }
+        },
+
+        error: function (err) {
+            console.log(err)
+        }
     });
-
-    return false;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

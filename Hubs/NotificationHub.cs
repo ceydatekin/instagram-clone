@@ -34,7 +34,7 @@ namespace Instagram.Hubs
         public async Task NotifyForShare(string user, string message)
         {
                 await Clients.All.SendAsync("GetNotificationForShare", user, message);
-         
+
 
         }
         public async Task NotifyForLike(string user, string receiverUserName, string message)

@@ -6,18 +6,19 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").
 
 
 connection.on("GetNotificationForLike", function (user, message) {
-    toastr.warning(user + " " + message, "Like");
+    toastr.warning(user + " " + message, "LIKE");
     toastr.options.progressBar = true;
 });
 
 connection.on("GetNotificationForFollow", function (user, message) {
-    toastr.warning(user + " " + message, "Like");
+    toastr.warning(user + " " + message, "FOLLOW");
     toastr.options.progressBar = true;
 });
 
 connection.on("GetNotificationForShare", function (user, message) {
     console.log('paylaşım')
-    alert(user + message);
+    toastr.warning(user + " " + message, "SHARE");
+    toastr.options.progressBar = true;
 });
 
 connection.start().then(function () {
